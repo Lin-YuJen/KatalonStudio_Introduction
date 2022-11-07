@@ -1,0 +1,35 @@
+\documentclass{beamer}
+\def\allfiles{}	% 定義主頁，用於單頁編譯辨識用
+\input{setting/setting}
+\author{Enix Lin}
+\begin{document}
+	\title{Katalon Studio}
+	\subtitle{Regression Testing}
+	% 作者放在 document 外面可以去掉告警
+	% \author{Enix Lin}
+	% \institute{}
+	\date{2022/02}
+	\maketitle
+	%----------------------------
+	\begin{frame}[c]
+		\label{Index}
+		\frametitle{目錄}
+		\tableofcontents
+	\end{frame}
+	%----------------------------
+	% 介紹章節
+	\input{intro}
+	%----------------------------
+	% 專案結構
+	\input{projectStructure}
+	%----------------------------
+	% 範例說明
+%	\input{example}
+	%----------------------------
+	% Groovy 介紹
+	\input{groovyIntro}
+	%----------------------------
+	% 參考文件
+	\input{reference}
+	%----------------------------
+\end{document}

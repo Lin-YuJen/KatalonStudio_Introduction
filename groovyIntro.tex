@@ -1,0 +1,155 @@
+\ifx\allfiles\undefined
+\documentclass{beamer}
+\input{setting/setting}
+\begin{document}
+\input{setting/command}
+\fi
+%----------------------------
+\section{Groovy}
+\begin{frame}
+  \frametitle{Groovy 介紹}
+  Groovy 是 Java 平台上設計的物件導向程式設計語言。
+  擁有類似 Python、Ruby 中的一些特性，
+  可以作為 Java 平台的 Scripting language 使用，
+  Groovy 動態地編譯成執行於 JVM 上的 Java bytecode，
+  並與其他 Java code 和 library 進行互操作。由於其執行在JVM上的特性，
+  Groovy 可以使用其他 Java 編寫的 Library。~\\~\\
+  Groovy 的語法與 Java 非常相似，
+  大多數 Java code 也符合 Groovy 的語法規則，
+  儘管可能語意不同。~\\
+  \begin{center}
+    \includegraphics[width=0.5\textwidth]{picture/Groovy-logo.png}
+  \end{center}
+\end{frame}
+%----------------------------
+\subsection{語法知識}
+\begin{frame}[fragile]
+  \frametitle{變數宣告與方法調用}
+  變數可以用 def 關鍵字宣告，所有行句尾不必強制使用分號：
+  \begin{block}{宣告一變數}
+    def methodName = 'showMessage'
+  \end{block}
+  如果方法參數只有一個，可以省略其括號，即下列兩行等義：
+  \begin{columns}
+    \column{.49\textwidth}
+    \begin{block}{輸出 Console 1}
+      println('Hello World')
+    \end{block}
+    \column{.49\textwidth}
+    \begin{block}{輸出 Console 2}
+      println 'Hello World'
+    \end{block}
+  \end{columns}
+  ~\\
+  方法可以直接用方法名(String/GString)呼叫：
+  \begin{block}{CustomKeywords 物件使用名稱為 verifyResponseErrorCode 的方法}
+    CustomKeywords.'verifyResponseErrorCode' (response,'0000')
+  \end{block}
+\end{frame}
+%----------------------------
+\begin{frame}[fragile] % 含有 Code 的 frame 要加上 fragile
+    \frametitle{Gtring and String}
+    以下簡約表示 Gtring 與 String 的不同
+    %\hyperlink{objectRepository}{\beamerbutton{objectRepository}}
+    % -- Code block--
+    \begin{block}{String：單引號}
+\begin{lstlisting}
+def string = 'this is a string'
+\end{lstlisting}
+    \end{block}
+
+    % -- Code block--
+    \begin{block}{GString：雙引號}
+\begin{lstlisting}
+def gstring = "hello, ${string}"
+println gstring
+\end{lstlisting}
+    \end{block}
+    
+    如果使用 println 印出 gstring 變數會顯示 hello, this is a string
+\end{frame}
+%----------------------------
+\begin{frame}[fragile]
+  \begin{block}{Script：動態使用方法}
+\begin{lstlisting}
+def methodName = "showMessage"
+def computer = new Computer()
+computer."$methodName" "My name is John."
+\end{lstlisting}
+  \end{block}
+
+  \begin{block}{Class 自訂類別}
+\begin{lstlisting}
+class Computer {
+  void showMessage(def message) {
+    println message
+  }
+}
+\end{lstlisting}
+  \end{block}
+  
+  \begin{block}{Console Output}
+    My name is John. 
+  \end{block}
+\end{frame}
+%----------------------------
+\begin{frame}[fragile]
+  \frametitle{List and Map}
+  Groovy 有提供快速建立含有資料的 List 與 Map 的語法，使用中括號即可
+  快速建立 ArrayList 與 LinkedHashMap 類別。~\\
+  搭配 groovy.json.JsonBuilder 可以再轉為 Json 物件。
+  \begin{block}{快速建立Map}
+\begin{lstlisting}
+def map = [
+  "key":"value",
+  "contractId":"CON0000001",
+  "serviceIds":[
+    "SVC00001",
+    "SVC00002",
+    "SVC00003"
+  ]
+]
+\end{lstlisting}
+  \end{block}
+\end{frame}
+%----------------------------
+\subsection{實用類別}
+\begin{frame}[fragile]
+    \frametitle{JsonSlurper / XmlSlurper 類別}
+    來自 groovy.json.JsonSlurper / groovy.json.XmlSlurper
+    ~\\
+    兩個類別可以協助轉換自 WS.sendRequest() 得到的 Response 物件中的內容
+    \begin{block}{Sample}
+\begin{lstlisting}
+ResponseObject response =
+  WS.sendRequest(findTestObject('CRMRequest'))
+def xmlResult = 
+  xmlSlurper.parseText(response.getResponseText())
+def jsonResult = 
+  jsonSlurper.parseText(xmlResult.text())
+def contractId = jsonResult.CONTRACT_ID
+\end{lstlisting}
+    \end{block}
+\end{frame}
+%----------------------------
+\begin{frame}[fragile]
+    \frametitle{Sql 類別}
+    來自 groovy.sql.Sql，可以快速建立資料庫連線
+    \begin{block}{Sample}
+\begin{lstlisting}
+def database = Sql.newInstance(
+  "jdbcUrl", "userName", "p6d", "driver"
+)
+def id = "CON01"
+def sql = "SELECT * FROM USER WHERE ID = ${id}"
+database.eachRow(sql){
+  println it.getString("userName")
+}
+database.close()
+\end{lstlisting}
+    \end{block}
+\end{frame}
+%----------------------------
+\ifx\allfiles\undefined
+\end{document}
+\fi

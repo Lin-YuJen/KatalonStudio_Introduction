@@ -1,0 +1,24 @@
+### Latex output file
+/*.log
+/*.synctex.gz
+/*.aux
+/*.nav
+/*.out
+/*.snm
+/*.toc
+/*.vrb
+/*.pdf
+
+### IntelliJ IDEA ###
+.idea
+auxil
+*.iws
+*.iml
+*.ipr
+out/
+
+### VS Code ###
+.vscode/
+
+### Others
+HELP.md

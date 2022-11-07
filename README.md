@@ -1,4 +1,4 @@
-# Katalon Simple Guide
+# Introduction To Katalon Studio
 
 此文件為個人為分享 Katalon 的操作功能所做的簡報，全篇採用 Latex Beamer 製作。
 
